@@ -12,11 +12,19 @@ function App() {
     { id: 3, name: "Honda", type: "600", color: "червоний", status: "busy", prise: 2300 },
     { id: 4, name: "Pulsar", type: "150", color: "синій", status: "unavailable", prise: 1500 }]);
 
-  const [newItem, setNewItem] = useState({ id: 0, name: "", type: "", color: "", status: "available", prise: 0 })
+  const [newItem, setNewItem] = useState({
+    id: 0,
+    name: "",
+    type: "",
+    color: "",
+    status: "available",
+    prise: 0,
+    wheeleSize: 0,
+    description: ""
+  })
   const [countAvailable, setCountAvailable] = useState(0)
   const [countBooked, setCountBooked] = useState(0)
   const [averageCost, setAverageCost] = useState(0)
-  const [midllePriseAllBikes, setMidllePriseAllBikes] = useState()
 
   let changeCostAllBike = 0;
 
@@ -68,13 +76,17 @@ function App() {
       type: newItem.type,
       color: newItem.color,
       status: "available",
-      prise: newItem.prise
+      prise: newItem.prise,
+      wheeleSize: newItem.wheeleSize,
+      description: newItem.description
     };
     newObject.id = state[state.length - 1].id + 1
-    if (newObject.name && newObject.type && newObject.color && newObject.prise > 0) {
+
+    if (newObject.name.length > 4 && newObject.type.length > 4 && newObject.color.length > 4 && newObject.prise > 0 && newObject.wheeleSize && newObject.description.length > 4) {
       setState(state.concat(newObject))
+
     } else {
-      alert('enter form')
+      alert('enter form min five symbols')
     }
     console.log(newItem);
   }
@@ -118,18 +130,20 @@ function App() {
             <form>
               <div className="inputs">
                 <div className="column-left">
-                  <input placeholder="Name" onChange={(el) => newItem.name = el.target.value}></input>
+                  <input placeholder="Name"
+                    onChange={(el) => newItem.name = el.target.value}></input>
                   <input placeholder="Color" onChange={(el) => newItem.color = el.target.value}></input>
                   <input type="number" placeholder="Price" onChange={(el) => newItem.prise = el.target.value}></input>
                 </div>
                 <div className="column-right">
                   <input placeholder="Type" onChange={(el) => newItem.type = el.target.value}></input>
-                  <input placeholder="Wheele size"></input>
-                  <input placeholder="ID (slug): ХХХХХХХХХХХХХ" onChange={(el) => newItem.id = el.target.value}></input>
+                  <input type='number' placeholder="Wheele size"
+                    onChange={(el) => newItem.wheeleSize = el.target.value}></input>
+                  <input type="number" placeholder="ID (slug): ХХХХХХХХХХХХХ" onChange={(el) => newItem.id = el.target.value}></input>
                 </div>
               </div>
               <div className="description-area">
-                <textarea placeholder="Description">
+                <textarea placeholder="Description" onChange={(el) => newItem.description = el.target.value}>
 
                 </textarea>
               </div>
